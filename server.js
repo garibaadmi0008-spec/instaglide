@@ -30,7 +30,7 @@ app.get("/download", async (req, res) => {
                 url: reelUrl
             },
             headers: {
-                'X-RapidAPI-Key': 'PASTE_YOUR_API_KEY',
+                'X-RapidAPI-Key': 'c0cf9f7ebamshd47fe8dd8d4589fp12e070jsn2c44d9664e51',
                 'X-RapidAPI-Host': 'instagram-downloader-download-instagram-videos-stories.p.rapidapi.com'
             }
         };
