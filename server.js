@@ -1,9 +1,14 @@
 const express = require("express");
 const cors = require("cors");
+const axios = require("axios");
 
 const app = express();
 
 app.use(cors());
+
+app.get("/", (req, res) => {
+    res.send("Instagram Downloader Backend Running");
+});
 
 app.get("/download", async (req, res) => {
 
@@ -12,18 +17,39 @@ app.get("/download", async (req, res) => {
     if (!reelUrl) {
         return res.json({
             success: false,
-            message: "No URL provided"
+            message: "No URL Provided"
         });
     }
 
-    // Fake response for testing
-    res.json({
-        success: true,
-        video: reelUrl
-    });
+    try {
+
+        const options = {
+            method: 'GET',
+            url: 'https://instagram-downloader-download-instagram-videos-stories.p.rapidapi.com/index',
+            params: {
+                url: reelUrl
+            },
+            headers: {
+                'X-RapidAPI-Key': 'PASTE_YOUR_API_KEY',
+                'X-RapidAPI-Host': 'instagram-downloader-download-instagram-videos-stories.p.rapidapi.com'
+            }
+        };
+
+        const response = await axios.request(options);
+
+        res.json(response.data);
+
+    } catch (error) {
+
+        res.json({
+            success: false,
+            message: "Error fetching reel"
+        });
+
+    }
 
 });
 
 app.listen(3000, () => {
-    console.log("Server running on port 3000");
+    console.log("Server Running");
 });
