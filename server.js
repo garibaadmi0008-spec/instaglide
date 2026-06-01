@@ -1,3 +1,4 @@
+```javascript
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
@@ -23,27 +24,20 @@ app.get("/download", async (req, res) => {
 
     try {
 
-        const options = {
-            method: 'GET',
-            url: 'https://instagram-downloader-download-instagram-videos-stories.p.rapidapi.com/index',
-            params: {
-                url: reelUrl
-            },
-            headers: {
-                'X-RapidAPI-Key': 'c0cf9f7ebamshd47fe8dd8d4589fp12e070jsn2c44d9664e51',
-                'X-RapidAPI-Host': 'instagram-downloader-download-instagram-videos-stories.p.rapidapi.com'
-            }
-        };
+        const response = await axios.get(
+            `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(reelUrl)}`
+        );
 
-        const response = await axios.request(options);
-
-        res.json(response.data);
+        res.json({
+            success: true,
+            data: response.data
+        });
 
     } catch (error) {
 
         res.json({
             success: false,
-            message: "Error fetching reel"
+            message: error.message
         });
 
     }
@@ -53,3 +47,4 @@ app.get("/download", async (req, res) => {
 app.listen(3000, () => {
     console.log("Server Running");
 });
+```
